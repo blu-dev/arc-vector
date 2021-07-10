@@ -62,7 +62,7 @@ impl<T: Clone> ArcVector<T> {
             }
             let sub_len = Self::add_optional(&0 as *const i32 as *mut u32, &self.additional_size) as usize;
             unsafe {
-                memset(self.start.add(self.len()) as *mut c_void, 0x0, new_len - self.len());
+                memset((*self.start).add(self.len()) as *mut c_void, 0x0, new_len - self.len());
                 *self.size = (new_len - sub_len) as u32;
             }
         }
@@ -90,13 +90,16 @@ impl<T: Clone> ArcVector<T> {
 
     #[track_caller]
     pub fn extend_from_within(&mut self, start: usize, count: usize) {
+        use skyline::libc::{c_void, memcpy};
         if start + count > self.len() {
             panic!("Index out of bounds!")
         }
 
         self.reserve(self.len() + count);
-        for x in start..(start + count) {
-            self.push_from_within(x);
+        unsafe {
+            // I'm sorry, father
+            memcpy((*self.start).add(self.len()) as *mut c_void, (*self.start).add(start) as *const c_void, count * std::mem::size_of::<T>());
+            *self.size += count as u32;
         }
     }
 
