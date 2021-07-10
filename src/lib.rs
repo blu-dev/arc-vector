@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use std::ops::{Range, Index, IndexMut};
 
-struct ArcVector<T: Clone> {
+pub struct ArcVector<T: Clone> {
     has_realloced: bool,
     start: *mut *mut T,
     size: *mut u32,
@@ -161,12 +161,12 @@ impl<T: Clone> ArcVector<T> {
     }
 }
 
-struct ArcVectorIter<'a, T: Clone> {
+pub struct ArcVectorIter<'a, T: Clone> {
     vector: &'a ArcVector<T>,
     index: usize
 }
 
-struct ArcVectorIterMut<'a, T: Clone> {
+pub struct ArcVectorIterMut<'a, T: Clone> {
     vector: &'a mut ArcVector<T>,
     index: usize
 }
