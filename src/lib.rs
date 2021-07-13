@@ -68,6 +68,10 @@ impl<T: Clone> ArcVector<T> {
         }
     }
 
+    pub fn set_capacity(&mut self, new_cap: usize) {
+        self.cap = new_cap;
+    }
+
     pub fn push(&mut self, obj: T) {
         self.reserve(self.len() + 1);
         unsafe {
