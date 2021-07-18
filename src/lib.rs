@@ -86,7 +86,12 @@ impl<T: Clone> ArcVector<T> {
     }
 
     pub fn extend(&mut self, slice: &[T]) {
+        use skyline::libc::{c_void, memcpy};
         self.reserve(self.len() + slice.len());
+        unsafe {
+            // still sorry
+            memcpy((*self.start).add(self.len()) as *mut c_void, slice.as_ptr() as *const c_void, slice.len() * std::mem::size_of::<T>());
+        }
         for obj in slice.iter(){
             self.push(obj.clone())
         }
