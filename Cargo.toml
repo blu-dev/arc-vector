@@ -7,4 +7,5 @@ edition = "2018"
 
 [dependencies]
 skyline = { git = "https://github.com/ultimate-research/skyline-rs.git" }
-smash-arc = { path = "../smash-arc", features = [ "smash-runtime", "rust-zstd" ] }
+# smash-arc = { path = "../smash-arc", features = [ "smash-runtime", "rust-zstd" ] }
+smash-arc = { git = "https://github.com/jam1garner/smash-arc", features = [ "smash-runtime", "rust-zstd" ] }
