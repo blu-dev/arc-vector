@@ -75,7 +75,7 @@ impl<T: Clone> ArcVector<T> {
     pub fn push(&mut self, obj: T) {
         self.reserve(self.len() + 1);
         unsafe {
-            *(*self.start).add(*self.size as usize) = obj;
+            *(*self.start).add(self.len()) = obj;
             *self.size += 1;
         }
     }
